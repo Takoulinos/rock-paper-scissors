@@ -5,50 +5,48 @@ function computerPlay() {
 }
 
 function playRound(playerSelection, computerSelection) {
-    playerSelection = playerSelection[0].toUpperCase()+playerSelection.slice(1).toLowerCase();
     if (playerSelection === computerSelection) {
-        return 'It\'s a tie' ;
+        result.textContent = 'It\'s a tie' ;
     }
     else if (playerSelection === 'Rock') {
         if (computerSelection === 'Paper') {
-            winloss -= 1;
-            return 'You lose. Paper beats Rock.';
-        }
+            result.textContent = 'You lose. Paper beats Rock.';
+            computerScore += 1; }
         else {
-            winloss += 1;
-            return 'You win. Rock beats scissors.';
-        }
+            result.textContent = 'You win. Rock beats scissors.'; 
+            playerScore += 1; }
     }
     else if (playerSelection === 'Paper') {
         if (computerSelection === 'Scissors') {
-            winloss -= 1;
-            return 'You lose. Scissors beats paper.';
-        }
+            result.textContent = 'You lose. Scissors beats paper.';
+            computerScore += 1; }
         else {
-            winloss += 1;
-            return 'You win. Paper beats rock.';
-        }
+            result.textContent = 'You win. Paper beats rock.';
+            playerScore += 1; }
     }
     else {
         if (computerSelection === 'Rock') {
-            winloss -= 1;
-            return 'You lose. Rock beats scissors.';
-        }
+            result.textContent = 'You lose. Rock beats scissors.'; 
+            computerScore += 1; }
         else {
-            winloss += 1;
-            return 'You win. Scissors beats paper.';
-        }
+            result.textContent = 'You win. Scissors beats paper.'; 
+            playerScore += 1; }
     }
+    score.textContent = `You: ${playerScore} Computer: ${computerScore} `;
+    if (playerScore === 5){
+        score.textContent += 'You win!';}
+    else if (computerScore === 5) {
+        score.textContent += 'Computer wins!'}
 }
 
-function game() {
-    for (let i=0; i<5; i++) {
-        playerSelection = prompt("Enter your choice:");
-        computerSelection = computerPlay();
-        console.log(playRound(playerSelection, computerSelection));
-    }
-    let result = (winloss = 0) ? 'TIE' : (winloss>0) ? 'YOU WIN' : 'YOU LOSE' ;
-    return result;
-}
+const btns = document.querySelectorAll('button');
+btns.forEach(btn => btn.addEventListener('click', function() {playRound(this.id, computerPlay())}));
 
-let winloss = 0;
+const result = document.createElement('div');
+document.body.appendChild(result);
+result.textContent = 'Let the game begin';
+
+const score = document.createElement('div');
+document.body.appendChild(score);
+let playerScore = 0;
+let computerScore = 0;
